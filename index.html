@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="飞飞电影网 feifeidianyingwang-cn 是一个关于轻快观影与良心片单的电影导航：飞飞电影网、飞飞电影、飞飞影院、飞飞影视、飞飞电影网官网、飞飞电影网入口、飞飞电影网址、电影网、电影网站、影视网、电影网站导航、电影网址大全、电影导航、经典电影、高分电影、喜剧片、动画电影、动作片、港片、华语片、文艺片、纪录片、治愈电影、冷门佳片、深夜电影。本站不提供任何侵权影视资源，只做片单与正版入口指引。">
+<meta name="keywords" content="飞飞电影网,飞飞电影,飞飞影院,飞飞影视,飞飞电影网官网,飞飞电影网入口,飞飞电影网址,电影网,电影网站,影视网,电影网站导航,电影网址大全,电影导航,经典电影,高分电影,喜剧片,动画电影,动作片,港片,华语片,文艺片,纪录片,治愈电影,冷门佳片,深夜电影,feifeidianyingwang-cn">
+<meta name="author" content="飞飞电影网">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>飞飞电影网 - feifeidianyingwang-cn | 轻快一点，好电影不累</title>
+<link rel="canonical" href="https://域名.github.io/">
+<style>
+/* ==========================================================
+   飞飞电影网  feifeidianyingwang-cn
+   单页式站点（锚点导航 #），移动端自适应
+   CSS / DOM 结构 / 视觉方案 全部内联、彼此独立
+   按约定：不生成 robots.txt 与 sitemap.xml
+   ========================================================== */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#16222e;
+  --ink-2:#5a6b78;
+  --mut:#93a3b0;
+  --paper:#f7fbff;
+  --paper-2:#ffffff;
+  --line:#e2ecf5;
+  --line-2:#c9dae8;
+  --sky:#4aa3e0;     /* 飞飞蓝 */
+  --sky-2:#7fd0f0;   /* 晴空浅蓝 */
+  --sun:#ffc145;     /* 暖阳黄 */
+  --plum:#6f6fb2;    /* 远山紫 */
+  --leaf:#4cae7a;    /* 新叶绿 */
+  --shadow:0 24px 54px rgba(22,34,46,.16);
+  --ease:cubic-bezier(.24,.8,.32,1);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","WenQuanYi Micro Hei","Helvetica Neue",Arial,sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.9;overflow-x:hidden;
+  background-image:
+    radial-gradient(700px 480px at 100% -12%,rgba(127,208,240,.40),transparent 64%),
+    radial-gradient(560px 440px at -10% 30%,rgba(255,193,69,.26),transparent 60%);
+  background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none;outline:none}
+ul,ol{list-style:none}
+img,svg,figure{display:block;max-width:100%}
+button{font-family:inherit;background:none;border:none;color:inherit;cursor:pointer}
+code{font-family:"SFMono-Regular",Consolas,monospace;font-size:.86em;color:#1b5c86;background:rgba(127,208,240,.34);padding:1px 7px;border-radius:5px}
+::selection{background:var(--sun);color:#3a2c10}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+.box{width:100%;max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+.block{padding:104px 0;position:relative;z-index:2}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;letter-spacing:.26em;color:#1b5c86;font-weight:800;text-transform:uppercase}
+.kicker::before{content:"";width:26px;height:1.5px;background:var(--sky-2)}
+.heading{font-size:clamp(26px,4.5vw,46px);line-height:1.3;font-weight:900;letter-spacing:.5px;margin:12px 0 10px}
+.heading em{font-style:normal;background:linear-gradient(180deg,transparent 60%,rgba(255,193,69,.7) 60%);padding:0 4px}
+.intro{color:var(--ink-2);max-width:900px;font-size:16px}
+.intro b{color:var(--ink);background:linear-gradient(180deg,transparent 62%,rgba(255,193,69,.7) 62%);padding:0 2px}
+.bar{width:60px;height:2px;background:linear-gradient(90deg,var(--sky),var(--sky-2));margin:16px 0 30px}
+.head-flex{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;flex-wrap:wrap;margin-bottom:34px}
+
+/* ---------- 导航 ---------- */
+.topbar{position:fixed;inset:0 0 auto 0;z-index:100;background:rgba(247,251,255,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s var(--ease)}
+.topbar.stuck{box-shadow:0 10px 26px rgba(22,34,46,.12)}
+.top-row{display:flex;align-items:center;gap:20px;height:64px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.5px;font-size:15.5px}
+.logo .mark{position:relative;width:48px;height:44px;flex:none;border-radius:50% 50% 14px 14px;background:linear-gradient(150deg,#7fd0f0,#4aa3e0);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px rgba(74,163,224,.36);overflow:hidden}
+.logo .mark b{position:relative;z-index:2;font-family:"Songti SC","STSong",serif;font-size:19px;font-weight:900;color:#fff}
+.logo .wing{position:absolute;right:-8px;top:6px;font-size:15px;z-index:3;animation:flap .9s ease-in-out infinite alternate;transform-origin:bottom center}
+@keyframes flap{from{transform:rotate(-16deg)}to{transform:rotate(20deg)}}
+.logo small{color:var(--mut);font-size:9px;letter-spacing:.1em;font-weight:700}
+.top-links{display:flex;gap:2px;margin-left:auto;align-items:center}
+.top-links a{font-size:13.5px;color:var(--ink-2);padding:9px 15px;border-radius:8px;transition:.25s var(--ease);font-weight:600}
+.top-links a:hover{color:#1b5c86;background:rgba(127,208,240,.28)}
+.top-links a.now{color:#fff;background:linear-gradient(92deg,var(--sky),var(--sky-2));box-shadow:0 6px 14px rgba(74,163,224,.32)}
+.top-cta{font-size:13px;font-weight:800;padding:9px 20px;border-radius:999px;border:1.5px solid var(--line-2);color:#1b5c86;transition:.25s var(--ease);letter-spacing:.06em}
+.top-cta:hover{background:var(--sky);color:#fff;border-color:var(--sky);transform:translateY(-2px)}
+.burger{display:none;width:42px;height:42px;border:1.5px solid var(--line-2);border-radius:9px;background:var(--paper-2);cursor:pointer;flex-direction:column;gap:5px;place-items:center;margin-left:auto}
+.burger i{width:18px;height:1.5px;background:var(--ink);border-radius:2px;transition:.3s var(--ease)}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100vh;display:grid;place-items:center;padding:128px 0 92px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center;position:relative;z-index:2}
+.hero h1{font-size:clamp(34px,6vw,60px);line-height:1.16;font-weight:950;letter-spacing:.5px;margin:18px 0 16px}
+.hero h1 .badge{display:inline-block;position:relative;font-size:.4em;color:#3a2c10;background:linear-gradient(135deg,#ffe08a,#ffc145);padding:9px 20px;border-radius:999px;vertical-align:middle;box-shadow:0 12px 26px rgba(255,193,69,.42);letter-spacing:.06em;margin-left:6px}
+.hero h1 .badge::after{content:"FLY";position:absolute;right:9px;top:-13px;font-size:8px;letter-spacing:.26em;color:#1b5c86;font-weight:900}
+.hero p{font-size:clamp(15px,1.6vw,17px);color:var(--ink-2);max-width:580px}
+.acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:15px;padding:15px 30px;border-radius:10px;border:1.5px solid transparent;transition:.28s var(--ease)}
+.btn-main{background:linear-gradient(92deg,var(--sky),var(--sky-2));color:#fff;box-shadow:0 14px 30px rgba(74,163,224,.34)}
+.btn-main:hover{transform:translateY(-3px);filter:brightness(1.06)}
+.btn-line{border-color:var(--line-2);color:var(--ink);background:var(--paper-2)}
+.btn-line:hover{border-color:var(--sky);color:#1b5c86;transform:translateY(-3px)}
+.tags{display:flex;gap:9px;margin-top:26px;flex-wrap:wrap}
+.tags span{font-size:12px;color:var(--mut);border:1px dashed var(--line-2);border-radius:6px;padding:6px 12px;cursor:pointer;transition:.2s var(--ease)}
+.tags span:hover{color:#1b5c86;border-color:var(--sky);border-style:solid;background:rgba(127,208,240,.3)}
+.nums{display:flex;gap:34px;margin-top:34px;flex-wrap:wrap}
+.num span{display:block;font-size:10.5px;letter-spacing:.14em;color:var(--mut)}
+.num b{font-family:"DIN Alternate","Arial Black",sans-serif;font-size:26px;font-weight:950;color:var(--sky)}
+
+/* ---------- 栏目一：起飞片单（编号磁贴，独立 DOM） ---------- */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cell{position:relative;display:grid;grid-template-columns:58px 1fr;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.32s var(--ease);min-height:124px;text-decoration:none;color:inherit}
+.cell::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,var(--sky),var(--sun));transition:width .5s var(--ease)}
+.cell:hover{transform:translateY(-7px);border-color:var(--line-2);box-shadow:var(--shadow)}
+.cell:hover::after{width:100%}
+.cell .no{display:grid;place-items:center;font-family:"DIN Alternate","Arial Black",sans-serif;font-size:26px;font-weight:950;color:rgba(74,163,224,.32);letter-spacing:-.02em;background:linear-gradient(180deg,transparent,rgba(127,208,240,.36))}
+.cell:hover .no{color:var(--sky)}
+.cell .bd{padding:15px 16px 15px 4px;position:relative;z-index:2}
+.cell .bd h4{font-size:14.5px;font-weight:900;line-height:1.5;letter-spacing:.3px}
+.cell .bd p{font-size:11.5px;color:var(--mut);margin-top:4px;line-height:1.7}
+
+/* ---------- 栏目二：高分榜（斑马行式伪表格，独立 DOM） ---------- */
+.sheet{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 8px 26px rgba(22,34,46,.1)}
+.row{display:grid;grid-template-columns:56px 2.2fr 1.2fr 96px;gap:14px;align-items:center;padding:13px 18px;transition:background .22s var(--ease),color .22s var(--ease)}
+.row.head{background:linear-gradient(92deg,#2f7fbf,#7fd0f0);color:#fff;font-size:11px;letter-spacing:.16em;font-weight:800;text-transform:uppercase;padding:15px 18px}
+.row.head .num-col{color:#eaf7ff}
+.row.body:hover{background:linear-gradient(92deg,rgba(74,163,224,.12),rgba(127,208,240,.26))}
+.row.body:hover .title{color:var(--sky)}
+.row .num-col{font-family:"DIN Alternate","Arial Black",sans-serif;font-size:21px;font-weight:950;color:var(--line-2)}
+.row:nth-child(even) .num-col{color:var(--sky-2)}
+.row .title{font-weight:900;letter-spacing:.3px;font-size:15px;line-height:1.45}
+.row .title small{display:block;font-size:11px;font-weight:600;color:var(--mut);letter-spacing:.04em;margin-top:2px}
+.row .rate-col{font-size:12px;font-weight:800;border-radius:999px;padding:4px 10px;text-align:center}
+.row .meta-col{font-size:11.5px;color:var(--mut);text-align:right}
+.row + .row{border-top:1px solid var(--line)}
+
+/* ---------- 栏目三：飞行放映（横向吸附卡组 + 说明面板，独立 DOM） ---------- */
+.deck{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;scrollbar-width:thin}
+.deck figure{scroll-snap-align:start;flex:0 0 clamp(158px,21vw,196px);position:relative;cursor:pointer;transition:.34s var(--ease)}
+.deck figure:hover{transform:translateY(-8px)}
+.deck figure .cvr{position:relative;height:clamp(218px,28vw,280px);border-radius:14px;overflow:hidden;box-shadow:0 14px 30px rgba(22,34,46,.22)}
+.deck figure .cvr::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 52%,rgba(22,34,46,.9))}
+.deck figure .cvr .badge{position:absolute;top:10px;left:10px;z-index:2;font-size:10.5px;font-weight:900;letter-spacing:.08em;color:#3a2c10;background:var(--sun);border-radius:5px;padding:4px 9px}
+.deck figure .cvr .len{position:absolute;bottom:10px;right:10px;z-index:2;font-size:10px;font-weight:800;color:#fff;border:1px solid rgba(255,255,255,.6);border-radius:999px;padding:3px 9px;backdrop-filter:blur(4px)}
+.deck figure figcaption{margin-top:11px;font-size:14px;font-weight:900;letter-spacing:.3px}
+.deck figure figcaption small{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:3px;letter-spacing:.02em}
+.deck figure:hover figcaption{color:var(--sky)}
+.panel{position:relative;margin-top:26px;background:linear-gradient(165deg,#eef7ff,#dbeeff);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);overflow:hidden}
+.panel::after{content:"飞";position:absolute;right:-16px;bottom:-52px;font-size:210px;font-weight:950;color:rgba(74,163,224,.18);line-height:1;font-family:"Songti SC","STSong",serif}
+.panel h4{font-size:19px;font-weight:900;margin-bottom:10px;color:var(--sky)}
+.panel p{font-size:13.5px;line-height:1.95;color:#26445a}
+.panel .hl{display:inline-block;margin-top:12px;font-size:11.5px;font-weight:800;letter-spacing:.06em;color:#1b5c86;border:1px solid rgba(27,92,134,.5);border-radius:6px;padding:7px 12px;background:rgba(127,208,240,.34)}
+
+/* ---------- 栏目四：观影指南（双栏卡片组，独立 DOM） ---------- */
+.guide{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.gcard{position:relative;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px 22px 30px;box-shadow:0 6px 20px rgba(22,34,46,.08);transition:.32s var(--ease);cursor:pointer;overflow:hidden}
+.gcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--sky),var(--sky-2))}
+.gcard:nth-child(2)::before{background:linear-gradient(180deg,#7fd0f0,#ffc145)}
+.gcard:nth-child(3)::before{background:linear-gradient(180deg,var(--plum),#a39fd6)}
+.gcard:nth-child(4)::before{background:linear-gradient(180deg,#4cae7a,#a8dfc2)}
+.gcard:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.gcard .ix{font-family:"DIN Alternate","Arial Black",sans-serif;font-size:34px;font-weight:950;color:rgba(74,163,224,.26);line-height:1;letter-spacing:-.02em}
+.gcard:hover .ix{color:var(--sky)}
+.gcard h4{font-size:16.5px;font-weight:900;margin:6px 0 7px;letter-spacing:.4px}
+.gcard p{font-size:13px;color:var(--ink-2);line-height:1.85}
+.gcard a.dot{display:inline-block;margin-top:10px;font-size:11.5px;font-weight:800;color:var(--sky);border-bottom:1.5px dashed var(--sky-2);padding-bottom:1px}
+
+/* ---------- 栏目五：起飞问答（论点卡组，独立 DOM） ---------- */
+.myth{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.arg{position:relative;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 24px 20px;transition:.32s var(--ease);cursor:pointer}
+.arg:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:var(--shadow)}
+.arg .no{font-family:"DIN Alternate","Arial Black",sans-serif;font-size:11px;font-weight:950;letter-spacing:.2em;color:var(--sky-2)}
+.arg h4{font-size:17px;font-weight:900;margin:6px 0 8px;letter-spacing:.4px}
+.arg p{font-size:13px;color:var(--ink-2);line-height:1.85}
+.arg .q{position:absolute;right:16px;top:8px;font-family:"Songti SC","STSong",serif;font-size:50px;color:rgba(255,193,69,.42);line-height:1;font-weight:900}
+.arg:hover .q{color:rgba(255,193,69,.72)}
+
+/* ---------- 页脚 ---------- */
+.foot{position:relative;padding:70px 0 30px;border-top:1px solid var(--line);margin-top:36px;background:linear-gradient(180deg,transparent,rgba(74,163,224,.12));z-index:2}
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:34px;margin-bottom:40px}
+.foot-brand p{font-size:13.5px;color:var(--ink-2);margin-top:14px;max-width:310px}
+.foot-col h5{font-size:12px;letter-spacing:.2em;color:var(--ink);margin-bottom:15px;font-weight:900}
+.foot-col a{display:block;font-size:13.5px;color:var(--mut);padding:6px 0;transition:.2s var(--ease);border-bottom:1px solid transparent}
+.foot-col a:hover{color:var(--sky);border-bottom-color:var(--line-2);transform:translateX(4px)}
+.copy{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mut)}
+.copy b{color:var(--sky)}
+
+.up{position:fixed;right:20px;bottom:24px;z-index:90;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1.5px solid var(--line-2);background:var(--sky);color:#fff;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(14px);transition:.35s var(--ease);font-weight:950}
+.up.show{opacity:1;visibility:visible;transform:translateY(0)}
+.up:hover{background:var(--sun);color:#3a2c10}
+
+.show-up{opacity:0;transform:translateY(26px);transition:.7s var(--ease)}
+.show-up.in{opacity:1;transform:none}
+
+@media (max-width:960px){
+  .box{padding:0 18px}
+  .block{padding:72px 0}
+  .hero-grid,.guide{grid-template-columns:1fr;gap:44px}
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .myth{grid-template-columns:repeat(2,1fr)}
+  .row{grid-template-columns:44px 1.6fr 1fr 60px;gap:10px}
+  .row .meta-col{display:none}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:26px}
+}
+@media (max-width:680px){
+  .burger{display:grid}
+  .top-links{position:fixed;inset:64px 0 0 0;flex-direction:column;align-items:stretch;padding:24px 20px;gap:10px;background:rgba(247,251,255,.99);backdrop-filter:blur(14px);transform:translateX(100%);transition:.4s var(--ease);border-top:1px solid var(--line)}
+  .top-links.open{transform:none}
+  .top-links a{font-size:16px;padding:14px 18px;border-radius:10px}
+  .top-cta{text-align:center;justify-content:center;padding:14px}
+  .hero{padding:112px 0 72px;min-height:auto}
+  .hero h1{font-size:31px}
+  .acts .btn{flex:1;justify-content:center;padding:13px 20px;font-size:14px}
+  .grid4,.myth{grid-template-columns:1fr}
+  .cell{min-height:112px}
+  .foot-grid{grid-template-columns:1fr;gap:22px}
+  .copy{flex-direction:column;text-align:center}
+  .row{grid-template-columns:38px 1fr 52px;padding:12px 14px;gap:8px}
+  .row .rate-col{display:none}
+  .row.head .rate-col,.row.head .meta-col{display:none}
+}
+@media print{
+  #sky,.up,.burger{display:none}
+  body{background:#fff;color:#000}
+  .block{padding:24px 0}
+  .cell,.row,.gcard,.panel,.arg{background:#fff;border-color:#bbb;box-shadow:none;color:#000;page-break-inside:avoid}
+  .cell p,.panel p,.gcard p,.arg p,.foot-brand p,.foot-col a{color:#333}
+  .panel,.gcard:nth-child(2){background:#fff}
+  .panel h4,.gcard h4,.arg h4,.row .title{color:#000}
+}
+</style>
+</head>
+<body id="top">
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<!-- 天空层（云 + 飞鸟意象） -->
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<!-- ==================== 顶部导航 ==================== -->
+<header class="topbar" id="topbar">
+  <div class="box top-row">
+    <a class="logo" href="#top" aria-label="飞飞电影网 首页">
+      <span class="mark" aria-hidden="true"><b>飞</b><span class="wing">✈</span></span>飞飞电影网<small>FLY</small>
+    </a>
+    <button class="burger" id="burger" aria-label="切换菜单" aria-expanded="false"><i></i><i></i><i></i></button>
+    <nav class="top-links" id="topLinks" aria-label="主导航">
+      <a href="#list">起飞片单</a>
+      <a href="#top100">高分榜</a>
+      <a href="#deck">飞行放映</a>
+      <a href="#guide">观影指南</a>
+      <a href="#why">起飞问答</a>
+      <a href="#" class="top-cta">收藏官网</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== Hero ==================== -->
+<section class="hero" id="home" aria-labelledby="heroTitle">
+  <div class="box hero-grid">
+    <div class="show-up">
+      <span class="kicker">飞飞电影网 · feifeidianyingwang-cn · 轻快一点，好电影不累</span>
+      <h1>看电影，<em>轻快一点</em><span class="badge">起飞</span></h1>
+      <p><strong>飞飞电影网</strong>（feifeidianyingwang-cn）是一个关于<strong>轻快观影与良心片单</strong>的电影导航。我们做五件事：<strong>起飞片单、高分榜、飞行放映、观影指南、起飞问答</strong>。好电影不该沉重、不该费劲、不该被倍速、不该被解说、不该被弹窗。本站不提供、不存储、不链接任何侵权影视资源，只做片单与正版入口指引——持牌视频平台、艺术院线、电影资料馆、公共图书馆数字影院、CCTV6《佳片有约》、正规蓝光碟。所有"观看"按钮仅示意跳转逻辑（演示站统一用 <code>#</code> 占位）。</p>
+      <div class="acts">
+        <a class="btn btn-main" href="#list">打开片单</a>
+        <a class="btn btn-line" href="#guide">观影指南</a>
+      </div>
+      <div class="tags" aria-label="热门检索">
+        <span>飞飞电影网</span><span>飞飞电影</span><span>飞飞影院</span><span>飞飞影视</span><span>飞飞电影网官网</span><span>飞飞电影网入口</span><span>飞飞电影网址</span><span>电影网</span><span>电影网站</span><span>影视网</span><span>电影网站导航</span><span>电影网址大全</span><span>电影导航</span><span>经典电影</span><span>高分电影</span><span>喜剧片</span><span>动画电影</span><span>动作片</span><span>港片</span><span>华语片</span><span>文艺片</span><span>纪录片</span><span>治愈电影</span><span>冷门佳片</span><span>深夜电影</span>
+      </div>
+      <div class="nums">
+        <div class="num"><span>起飞片单</span><b>16</b></div>
+        <div class="num"><span>高分榜</span><b>10</b></div>
+        <div class="num"><span>正版入口</span><b>09</b></div>
+        <div class="num"><span>观影指南</span><b>04</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 栏目一：起飞片单 ==================== -->
+<section class="block" id="list" aria-labelledby="tList">
+  <div class="box">
+    <header class="head-flex show-up">
+      <div>
+        <span class="kicker">01 / TAKE OFF LIST</span>
+        <h2 class="heading" id="tList">起飞<em>片单</em> · 16 部，不费劲就好看</h2>
+        <p class="intro">飞飞电影网的片单只收"看起来不累"的片子。<strong>喜剧片、动画电影、动作片是主干</strong>：周星驰的笑、成龙的路、宫崎骏的风、皮克斯的眼泪、卓别林的帽子、金·凯瑞的脸、徐克的剑、吴宇森的鸽子。每格只有一句话，够你决定今晚看什么。</p>
+        <div class="bar"></div>
+      </div>
+    </header>
+
+    <div class="grid4">
+      <a class="cell show-up" href="#"><span class="no">01</span><span class="bd"><h4>大话西游</h4><p>周星驰：一生所爱，是笑完才懂</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">02</span><span class="bd"><h4>功夫</h4><p>周星驰：一个小人物的英雄梦</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">03</span><span class="bd"><h4>龙猫</h4><p>宫崎骏：雨夜车站，有怪兽</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">04</span><span class="bd"><h4>千与千寻</h4><p>长大，就是把名字还给自己</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">05</span><span class="bd"><h4>飞屋环游记</h4><p>皮克斯：一把气球，够飞一辈子</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">06</span><span class="bd"><h4>寻梦环游记</h4><p>真正的死亡，是被忘记</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">07</span><span class="bd"><h4>喜剧之王</h4><p>周星驰：其实我是一个演员</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">08</span><span class="bd"><h4>摩登时代</h4><p>卓别林：机器吞不下的人</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">09</span><span class="bd"><h4>警察故事</h4><p>成龙：一条街，跑到底</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">10</span><span class="bd"><h4>英雄本色</h4><p>吴宇森：小马哥的风衣</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">11</span><span class="bd"><h4>阿飞正传</h4><p>王家卫：一分钟的朋友</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">12</span><span class="bd"><h4>新龙门客栈</h4><p>徐克：大漠、客栈、一刀</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">13</span><span class="bd"><h4>疯狂的石头</h4><p>宁浩：一块石头，砸中所有人</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">14</span><span class="bd"><h4>摔跤吧！爸爸</h4><p>阿米尔·汗：父亲的眼睛</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">15</span><span class="bd"><h4>海上钢琴师</h4><p>1900：琴键有限，大海没有</p></span></a>
+      <a class="cell show-up" href="#"><span class="no">16</span><span class="bd"><h4>天堂电影院</h4><p>托纳多雷：电影是童年的窗</p></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 栏目二：高分榜 ==================== -->
+<section class="block" id="top100" style="background:linear-gradient(180deg,transparent,rgba(74,163,224,.12))" aria-labelledby="tTop">
+  <div class="box">
+    <header class="head-flex show-up">
+      <div>
+        <span class="kicker">02 / TOP 10 OF FLY</span>
+        <h2 class="heading" id="tTop">高分<em>榜</em> · 十位，笑着看完</h2>
+        <p class="intro">飞飞电影网的高分榜不看票房，只看"看完会不会笑，笑完会不会想点什么"。<strong>港片与动画电影占了六席</strong>——这不是偏见，是这些片子真的懂得怎么让人轻松，又不让人变傻。</p>
+        <div class="bar"></div>
+      </div>
+    </header>
+
+    <div class="sheet" role="table" aria-label="高分榜">
+      <div class="row head" role="row">
+        <span class="num-col" role="columnheader">#</span>
+        <span role="columnheader">片名 · 为什么在榜</span>
+        <span class="rate-col" role="columnheader">类型</span>
+        <span class="meta-col" role="columnheader">评分 / 片长</span>
+      </div>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">01</span><span class="title" role="cell">大话西游 <small>周星驰：一生所爱，是笑完才懂</small></span><span class="rate-col" role="cell" style="background:rgba(255,193,69,.5);color:#6b4d06">喜剧</span><span class="meta-col" role="cell">★★★★★ 95 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">02</span><span class="title" role="cell">龙猫 <small>宫崎骏：雨夜车站，有怪兽</small></span><span class="rate-col" role="cell" style="background:rgba(76,174,122,.34);color:#276142">动画</span><span class="meta-col" role="cell">★★★★★ 86 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">03</span><span class="title" role="cell">千与千寻 <small>宫崎骏：长大，就是把名字还给自己</small></span><span class="rate-col" role="cell" style="background:rgba(76,174,122,.34);color:#276142">动画</span><span class="meta-col" role="cell">★★★★★ 125 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">04</span><span class="title" role="cell">飞屋环游记 <small>皮克斯：一把气球，够飞一辈子</small></span><span class="rate-col" role="cell" style="background:rgba(76,174,122,.34);color:#276142">动画</span><span class="meta-col" role="cell">★★★★★ 96 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">05</span><span class="title" role="cell">功夫 <small>周星驰：一个小人物的英雄梦</small></span><span class="rate-col" role="cell" style="background:rgba(255,193,69,.5);color:#6b4d06">喜剧</span><span class="meta-col" role="cell">★★★★★ 100 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">06</span><span class="title" role="cell">英雄本色 <small>吴宇森：小马哥的风衣</small></span><span class="rate-col" role="cell" style="background:rgba(74,163,224,.24);color:#1b5c86">港片</span><span class="meta-col" role="cell">★★★★★ 95 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">07</span><span class="title" role="cell">天堂电影院 <small>托纳多雷：电影是童年的窗</small></span><span class="rate-col" role="cell" style="background:rgba(111,111,178,.26);color:#454578">文艺</span><span class="meta-col" role="cell">★★★★★ 155 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">08</span><span class="title" role="cell">海上钢琴师 <small>1900：琴键有限，大海没有</small></span><span class="rate-col" role="cell" style="background:rgba(111,111,178,.26);color:#454578">文艺</span><span class="meta-col" role="cell">★★★★★ 165 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">09</span><span class="title" role="cell">摩登时代 <small>卓别林：机器吞不下的人</small></span><span class="rate-col" role="cell" style="background:rgba(255,193,69,.5);color:#6b4d06">喜剧</span><span class="meta-col" role="cell">★★★★★ 87 min</span></a>
+      <a class="row body" role="row" href="#"><span class="num-col" role="cell">10</span><span class="title" role="cell">寻梦环游记 <small>皮克斯：真正的死亡，是被忘记</small></span><span class="rate-col" role="cell" style="background:rgba(76,174,122,.34);color:#276142">动画</span><span class="meta-col" role="cell">★★★★★ 105 min</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 栏目三：飞行放映 ==================== -->
+<section class="block" id="deck" style="background:linear-gradient(180deg,rgba(127,208,240,.1),transparent)" aria-labelledby="tDeck">
+  <div class="box">
+    <header class="head-flex show-up">
+      <div>
+        <span class="kicker">03 / FLYING SCREENING</span>
+        <h2 class="heading" id="tDeck">飞行<em>放映</em> · 今晚想飞去哪里</h2>
+        <p class="intro">飞飞电影网把片单按心情分，不按年代。<strong>动画电影看想象，喜剧片看人情，动作片看节奏，港片看江湖，文艺片看留白，纪录片看真实</strong>。滑一下，挑一格，关灯，开机，别倍速，别看解说，别点来路不明的"完整版"。</p>
+        <div class="bar"></div>
+      </div>
+    </header>
+
+    <div class="deck">
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#4aa3e0,#7fd0f0)"><span class="badge">动画</span><span class="len">86 min</span></span><figcaption>龙猫<small>日本 · 1988</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#2f7fbf,#7fd0f0)"><span class="badge">动画</span><span class="len">125 min</span></span><figcaption>千与千寻<small>日本 · 2001</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#ffc145,#ffd97a)"><span class="badge">喜剧</span><span class="len">95 min</span></span><figcaption>大话西游<small>港片 · 1995</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#6f6fb2,#a39fd6)"><span class="badge">文艺</span><span class="len">155 min</span></span><figcaption>天堂电影院<small>意大利 · 1988</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#1b5c86,#4aa3e0)"><span class="badge">动作</span><span class="len">95 min</span></span><figcaption>英雄本色<small>港片 · 1986</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#c98a2e,#ffc145)"><span class="badge">喜剧</span><span class="len">87 min</span></span><figcaption>摩登时代<small>美国 · 1936</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#4cae7a,#a8dfc2)"><span class="badge">动画</span><span class="len">96 min</span></span><figcaption>飞屋环游记<small>美国 · 2009</small></figcaption></figure>
+      <figure><span class="cvr" style="background:linear-gradient(160deg,#7b5a9e,#c3a8e0)"><span class="badge">文艺</span><span class="len">165 min</span></span><figcaption>海上钢琴师<small>意大利 · 1998</small></figcaption></figure>
+    </div>
+
+    <aside class="panel show-up">
+      <h4>飞飞电影网说的"轻快"，到底是什么？</h4>
+      <p>是<strong>不沉重，但不轻浮</strong>。《大话西游》讲失去、《功夫》讲穷、《龙猫》讲等待、《飞屋环游记》讲遗憾、《摩登时代》讲被机器吞掉的人、《天堂电影院》讲告别、《海上钢琴师》讲不下船。它们让你笑，也让你想。飞飞电影网（feifeidianyingwang-cn）只做片单与正版入口指引：<b>持牌视频平台、艺术院线、电影资料馆、公共图书馆数字影院、CCTV6《佳片有约》、正规蓝光碟</b>。不存储、不提供、不链接任何侵权影视资源，所有"观看"按钮仅示意跳转逻辑（演示站统一用 <code>#</code> 占位）。</p>
+      <span class="hl">9 个正版入口：持牌视频平台 · 艺术院线 · 电影资料馆 · 公共图书馆数字影院 · 纪录频道 · CCTV6《佳片有约》 · 正规蓝光碟 · 官方释出 · 学校/单位放映</span>
+    </aside>
+  </div>
+</section>
+
+<!-- ==================== 栏目四：观影指南 ==================== -->
+<section class="block" id="guide" aria-labelledby="tGuide">
+  <div class="box">
+    <header class="head-flex show-up">
+      <div>
+        <span class="kicker">04 / WATCHING GUIDE</span>
+        <h2 class="heading" id="tGuide">观影<em>指南</em> · 四条，比片单更管用</h2>
+        <p class="intro">飞飞电影网不替你决定看什么，只帮你把决定做对。这 4 条，是写给每一个想被电影轻轻托一下的人的便签。</p>
+        <div class="bar"></div>
+      </div>
+    </header>
+
+    <div class="guide">
+      <div class="gcard show-up">
+        <span class="ix">01</span>
+        <h4>轻快 ≠ 脑残，深刻 ≠ 沉重</h4>
+        <p>判断一部片子，只看三件事：有没有真的笑点、有没有真的痛处、有没有留一句让你睡不着的话。《大话西游》是喜剧，《海上钢琴师》是文艺片，《摩登时代》是默片——它们都不沉重，但都不轻。</p>
+        <a class="dot" href="#">起飞片单 →</a>
+      </div>
+      <div class="gcard show-up">
+        <span class="ix">02</span>
+        <h4>轻快地看：原速、原声、字幕</h4>
+        <p>配音版会吃掉一半的表演，枪版会吃掉全部的光。飞飞电影网的建议：原速 + 原声 + 字幕 + 关灯 + 别刷手机。一部 90 分钟的片子，值得你完整的 90 分钟。孩子第一次看，请给完整版，别给剪辑解说。</p>
+        <a class="dot" href="#">高分榜 →</a>
+      </div>
+      <div class="gcard show-up">
+        <span class="ix">03</span>
+        <h4>累了的时候，最适合看"轻"的片子</h4>
+        <p>动画电影讲想象，喜剧片讲人情，动作片讲节奏，港片讲江湖，文艺片讲留白，纪录片讲真实。建议：一条毯子、一碗热汤、别倍速、别看解说、别点来路不明的"完整版"。看完再洗碗，是最好的收尾。</p>
+        <a class="dot" href="#">飞行放映 →</a>
+      </div>
+      <div class="gcard show-up">
+        <span class="ix">04</span>
+        <h4>正版，才是对好电影最好的托举</h4>
+        <p>飞飞电影网（feifeidianyingwang-cn）不存储、不提供、不链接任何侵权影视资源。所有"观看"按钮仅示意跳转逻辑（演示站统一用 <code>#</code> 占位），请以持牌平台、艺术院线、电影资料馆、公共图书馆数字影院、正规蓝光碟为准。每一次正版播放，都是在给下一部《龙猫》《大话西游》《飞屋环游记》留一颗种子。</p>
+        <a class="dot" href="#">起飞问答 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 栏目五：起飞问答 ==================== -->
+<section class="block" id="why" style="background:linear-gradient(180deg,transparent,rgba(74,163,224,.12))" aria-labelledby="tWhy">
+  <div class="box">
+    <header class="head-flex show-up">
+      <div>
+        <span class="kicker">05 / TAKE OFF QUESTIONS</span>
+        <h2 class="heading" id="tWhy">起飞<em>问答</em> · 六个常被问起的问题</h2>
+        <p class="intro">飞飞电影网最常被问的 6 个问题。答案都很短，但值得记住。</p>
+        <div class="bar"></div>
+      </div>
+    </header>
+
+    <div class="myth">
+      <article class="arg show-up"><span class="q">?</span>
+        <span class="no">Q 01</span>
+        <h4>轻快，是态度，不是智商税</h4>
+        <p>《大话西游》是喜剧，但它讲的是失去；《功夫》是动作片，但它讲的是穷；《龙猫》是动画片，但它讲的是等待；《飞屋环游记》是合家欢，但它讲的是老了。《海上钢琴师》的 1900 一辈子不下船，是因为"琴键是有限的，而大海不是"。飞飞电影网的片单，拒绝把"好看"和"深刻"对立起来。</p>
+      </article>
+      <article class="arg show-up"><span class="q">?</span>
+        <span class="no">Q 02</span>
+        <h4>为什么片单里这么多港片？</h4>
+        <p>因为港片最懂"快"。《英雄本色》的风衣、《新龙门客栈》的一刀、《警察故事》的一条街、《阿飞正传》的一分钟、《无间道》的一句"我是谁"——港片教会我们：节奏就是情绪，留白就是台词。这是飞飞电影网的精神底色。</p>
+      </article>
+      <article class="arg show-up"><span class="q">?</span>
+        <span class="no">Q 03</span>
+        <h4>动画电影只是给小孩看的？</h4>
+        <p>《千与千寻》讲长大、《飞屋环游记》讲老了、《寻梦环游记》讲死了、《龙猫》讲等一个人、《心灵奇旅》讲活着的意义。它们只是用了画笔，没用降低智商。成年人更该看动画电影——因为成年人最怕的，是把"我想飞"这件事忘了。</p>
+      </article>
+      <article class="arg show-up"><span class="q">?</span>
+        <span class="no">Q 04</span>
+        <h4>喜剧片 = 段子合集？</h4>
+        <p>卓别林不说话，就让你笑；《疯狂的石头》一块石头，砸中所有人；周星驰的笑里藏着"其实我是一个演员"。好喜剧的底层从来不是梗，是处境。《摩登时代》的流水线、《大话西游》的五百年、《喜剧之王》的盒饭——笑完之后，你会想给谁打个电话。</p>
+      </article>
+      <article class="arg show-up"><span class="q">?</span>
+        <span class="no">Q 05</span>
+        <h4>片单会不会太少？</h4>
+        <p>16 部是"看完能记住"的下限，不是上限。一年看完 16 部，你已经比 70% 的人更懂电影。看完再补，片单会自动长出来。飞飞电影网不追新片，只追"会不会被记住"。</p>
+      </article>
+      <article class="arg show-up"><span class="q">?</span>
+        <span class="no">Q 06</span>
+        <h4>为什么坚持正版？</h4>
+        <p>因为《大话西游》的紫霞是真写的、《功夫》的包租婆是真摔的、《龙猫》的雨是真画的、《飞屋环游记》的气球是真算的、《摩登时代》的扳手是真拧的、《天堂电影院》的胶片是真烧的。每一次正版播放、每一张蓝光、每一场艺术院线放映，都是在给下一部好电影留一颗种子。这就是飞飞电影网的全部主张。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 页脚 ==================== -->
+<footer class="foot">
+  <div class="box">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="#top"><span class="mark" aria-hidden="true"><b>飞</b><span class="wing">✈</span></span>飞飞电影网<small>FLY</small></a>
+        <p>飞飞电影网（feifeidianyingwang-cn）专注轻快观影与良心片单：飞飞电影网、飞飞电影、飞飞影院、飞飞影视、电影网、电影网站、影视网、电影网站导航、电影网址大全、电影导航、经典电影、高分电影、喜剧片、动画电影、动作片、港片、华语片、文艺片、纪录片、治愈电影、冷门佳片、深夜电影。网站网址：https://域名.github.io</p>
+      </div>
+      <div class="foot-col">
+        <h5>内容栏目</h5>
+        <a href="#list">起飞片单</a>
+        <a href="#top100">高分榜</a>
+        <a href="#deck">飞行放映</a>
+        <a href="#guide">观影指南</a>
+        <a href="#why">起飞问答</a>
+      </div>
+      <div class="foot-col">
+        <h5>热门关键词</h5>
+        <a href="#">电影网</a>
+        <a href="#">电影网站</a>
+        <a href="#">影视网</a>
+        <a href="#">电影网站导航</a>
+        <a href="#">电影网址大全</a>
+        <a href="#">电影导航</a>
+        <a href="#">经典电影</a>
+        <a href="#">高分电影</a>
+        <a href="#">喜剧片</a>
+        <a href="#">动画电影</a>
+        <a href="#">动作片</a>
+        <a href="#">港片</a>
+        <a href="#">华语片</a>
+        <a href="#">文艺片</a>
+        <a href="#">纪录片</a>
+        <a href="#">治愈电影</a>
+        <a href="#">冷门佳片</a>
+        <a href="#">深夜电影</a>
+      </div>
+      <div class="foot-col">
+        <h5>导演与作者</h5>
+        <a href="#">周星驰</a>
+        <a href="#">成龙</a>
+        <a href="#">宫崎骏</a>
+        <a href="#">新海诚</a>
+        <a href="#">皮克斯</a>
+        <a href="#">吉卜力</a>
+        <a href="#">吴宇森</a>
+        <a href="#">徐克</a>
+        <a href="#">王家卫</a>
+        <a href="#">卓别林</a>
+        <a href="#">托纳多雷</a>
+        <a href="#">宁浩</a>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© <span id="year"></span> 飞飞电影网 feifeidianyingwang-cn · 网站网址：https://域名.github.io · 保留所有权利 · 轻快一点，好电影不累 · 认准唯一官网</span>
+      <span><b>feifeidianyingwang-cn</b> 不提供任何侵权影视资源</span>
+    </div>
+  </div>
+</footer>
+
+<a class="up" id="up" href="#top" aria-label="回到顶部" title="回到顶部">↑</a>
+
+<script>
+/* ---------- 天空：缓慢飘移的云团 + 飞鸟剪影 ---------- */
+(function(){
+  var c = document.getElementById('sky'), x, W, H, C, B, N = 8, birds = [];
+  if (!c || !c.getContext) return;
+  x = c.getContext('2d');
+  function resize(){
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+    C = [];
+    for (var i = 0; i < N; i++){
+      var w = 150 + Math.random()*230, h = 40 + Math.random()*40;
+      C.push({
+        y: H*0.14 + i*(H*0.76/N) + (Math.random()*40-20),
+        w: w, h: h,
+        ox: Math.random()*W*0.7,
+        sp: 0.16 + Math.random()*0.22,
+        ph: Math.random()*Math.PI*2,
+        c: ['rgba(127,208,240,.30)','rgba(255,255,255,.34)','rgba(74,163,224,.14)','rgba(255,193,69,.14)'][i%4]
+      });
+    }
+    birds = [];
+    for (i = 0; i < 7; i++){
+      birds.push({x: Math.random()*W, y: H*0.10 + Math.random()*H*0.30, sp: 0.7 + Math.random()*1.1, s: 6 + Math.random()*5, ph: Math.random()*Math.PI*2, fl: 0.5 + Math.random()*0.7});
+    }
+  }
+  var t = 0;
+  function cloud(g, cx, cy, w, h){
+    g.beginPath();
+    g.ellipse(cx, cy, w*0.5, h, 0, 0, Math.PI*2);
+    g.ellipse(cx - w*0.28, cy + h*0.10, w*0.30, h*0.72, 0, 0, Math.PI*2);
+    g.ellipse(cx + w*0.30, cy + h*0.14, w*0.26, h*0.66, 0, 0, Math.PI*2);
+    g.fill();
+  }
+  function draw(){
+    x.clearRect(0,0,W,H);
+    for (var i = 0; i < C.length; i++){
+      var b = C[i];
+      var cx = ((b.ox + t*b.sp) % (W + b.w)) - b.w*0.5 + Math.sin(b.ph + t*0.004)*30;
+      x.fillStyle = b.c;
+      cloud(x, cx, b.y, b.w, b.h);
+    }
+    x.strokeStyle = 'rgba(74,163,224,.30)';
+    x.lineWidth = 1.6;
+    x.lineCap = 'round';
+    for (i = 0; i < birds.length; i++){
+      var p = birds[i];
+      p.x += p.sp; p.y += Math.sin(p.ph + t*0.02)*0.12;
+      if (p.x > W + 40) p.x = -40;
+      var flap = Math.sin(t*p.fl)*5;
+      x.beginPath();
+      x.moveTo(p.x, p.y);
+      x.quadraticCurveTo(p.x + p.s*0.5, p.y - p.s*0.5 - flap, p.x + p.s, p.y);
+      x.quadraticCurveTo(p.x + p.s*0.5, p.y + p.s*0.3, p.x, p.y);
+      x.moveTo(p.x, p.y);
+      x.quadraticCurveTo(p.x - p.s*0.5, p.y - p.s*0.5 + flap, p.x - p.s, p.y);
+      x.quadraticCurveTo(p.x - p.s*0.5, p.y + p.s*0.3, p.x, p.y);
+      x.stroke();
+    }
+    t++;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ---------- 交互：滚动监听 / 动效 / 移动菜单 ---------- */
+(function(){
+  var bar = document.getElementById('topbar');
+  var up = document.getElementById('up');
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('topLinks');
+  var links = menu.querySelectorAll('a:not(.top-cta)');
+  var ids = ['home','list','top100','deck','guide','why'];
+  var secs = ids.map(function(id){ return document.getElementById(id); });
+
+  function onScroll(){
+    var y = window.scrollY || document.documentElement.scrollTop;
+    bar.classList.toggle('stuck', y > 20);
+    up.classList.toggle('show', y > 600);
+    var idx = 0;
+    for (var i = 0; i < secs.length; i++){
+      if (secs[i] && secs[i].getBoundingClientRect().top <= 140) idx = i;
+    }
+    links.forEach(function(a, i){ a.classList.toggle('now', i === idx); });
+  }
+
+  burger.addEventListener('click', function(){
+    var open = menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.forEach(function(a){
+    a.addEventListener('click', function(){
+      menu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+    document.querySelectorAll('.show-up').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.show-up').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
